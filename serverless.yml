@@ -1,0 +1,49 @@
+app: weather
+service:
+  name: weather
+
+frameworkVersion: '>=1.51'
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage,'development'}
+  region: ${opt:region, 'us-west-1'}
+  apiName: ${self:provider.stage}-${self:service.name}
+  apiKeys:
+    - ${self:provider.apiName}
+  
+package:
+  individually: true
+  excludeDevDependencies: true
+
+functions:
+  get-weather:
+    name: get
+    memorySize: 512
+    handler: src/routes/get.handler
+    events:
+      - http:
+          method: GET
+          path: 'weather'
+          private: false
+  get-forecast:
+    name: get-forecast
+    memorySize: 512
+    handler: src/routes/get-forecast.handler
+    events:
+      - http:
+          method: GET
+          path: 'weather/{city}/forecast'
+          private: false
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+custom:
+  webpack:
+    webpackConfig: /webpack.config.js
+    includeModules: true
+    packager: npm
+  serverless-offline:
+    port: 3000
+    prefix: thinkific-${self:service.name}
