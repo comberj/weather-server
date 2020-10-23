@@ -46,4 +46,4 @@ custom:
     packager: npm
   serverless-offline:
     port: 3000
-    prefix: thinkific-${self:service.name}
+    prefix: ${self:service.name}-api
