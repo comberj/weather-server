@@ -45,5 +45,5 @@ custom:
     includeModules: true
     packager: npm
   serverless-offline:
-    port: 3000
+    port: 4001
     prefix: ${self:service.name}-api
