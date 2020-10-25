@@ -26,6 +26,8 @@ functions:
           method: GET
           path: 'weather'
           private: false
+    environment: 
+      WEATHER_KEY: ${ssm:/open-weather-key~true}
   get-forecast:
     name: get-forecast
     memorySize: 512
@@ -35,6 +37,8 @@ functions:
           method: GET
           path: 'weather/{city}/forecast'
           private: false
+    environment: 
+      WEATHER_KEY: ${ssm:/open-weather-key~true}
 
 plugins:
   - serverless-webpack
@@ -45,5 +49,5 @@ custom:
     includeModules: true
     packager: npm
   serverless-offline:
-    port: 4001
+    port: 4000
     prefix: ${self:service.name}-api
