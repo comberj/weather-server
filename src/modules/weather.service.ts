@@ -3,6 +3,11 @@ import 'dotenv/config';
 import { IRequest } from '../interfaces/request.interface';
 
 export class WeatherService {
+  /**
+   * @param api - the API you are querying from openWeatherMap
+   * @param city - the city passed through queryParams
+   * @returns a constructed url
+   */
   private constructUrl = (api: string, city: string): string => {
     const apiKey = process.env.WEATHER_KEY;
 
@@ -26,11 +31,18 @@ export class WeatherService {
         console.log(error);
       });
   };
-
+  /** Queries the weather API - returning the current weather for a given city
+   * @param city - the city passed through pathParams
+   * @returns a request body via openWeatherMapAPI
+   */
   public get = (city: string): Promise<IRequest> => {
     return this.makeRequest(this.constructUrl('weather', city));
   };
 
+  /** Queries the forecast API - returning 3 hour forecasts for the next 5 days for a given city
+   * @param city - the city passed through pathParams
+   * @returns a request body via openWeatherMapAPI
+   */
   public getForecast = (city: string): Promise<IRequest> => {
     return this.makeRequest(this.constructUrl('forecast', city));
   };
