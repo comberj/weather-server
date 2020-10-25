@@ -11,6 +11,8 @@ provider:
   apiName: ${self:provider.stage}-${self:service.name}
   apiKeys:
     - ${self:provider.apiName}
+  environment: 
+    WEATHER_KEY: ${self:custom.env.${opt:stage, self:provider.stage}.WEATHER_KEY}
   
 package:
   individually: true
@@ -26,8 +28,6 @@ functions:
           method: GET
           path: 'weather'
           private: false
-    environment: 
-      WEATHER_KEY: ${ssm:/open-weather-key~true}
   get-forecast:
     name: get-forecast
     memorySize: 512
@@ -37,10 +37,9 @@ functions:
           method: GET
           path: 'weather/{city}/forecast'
           private: false
-    environment: 
-      WEATHER_KEY: ${ssm:/open-weather-key~true}
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-webpack
   - serverless-offline
 custom:
@@ -51,3 +50,8 @@ custom:
   serverless-offline:
     port: 4000
     prefix: ${self:service.name}-api
+  env:
+    production:
+      WEATHER_KEY: ${ssm:/open-weather-key~true}
+    development:
+      WEATHER_KEY: ${env:WEATHER_KEY}

@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "start": "NODE_PATH=. sls offline start",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha -r ts-node/register ./src/modules/**/*.spec.ts --exit",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "dependencies": {
@@ -15,12 +15,22 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^10.12.18",
+    "@types/sinon-chai": "^3.2.5",
+    "@types/node-fetch": "^2.5.7",
     "@types/serverless": "^1.72.5",
+    "@types/sinon": "^9.0.8",
+    "chai": "^4.2.0",
     "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "mocha": "^8.0.1",
     "prettier": "^2.1.2",
+    "serverless-dotenv-plugin": "^3.1.0",
     "serverless-offline": "^5.11.0",
     "serverless-webpack": "^5.2.0",
+    "sinon": "^9.0.2",
+    "sinon-chai": "^3.5.0",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.10.2",
     "typescript": "^3.2.4",

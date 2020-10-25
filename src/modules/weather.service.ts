@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 import 'dotenv/config';
-import { IRequest } from '../interfaces/request.interface';
+import { Request } from 'node-fetch';
 
 export class WeatherService {
   /**
@@ -14,7 +14,7 @@ export class WeatherService {
     return `http://api.openweathermap.org/data/2.5/${api}?q=${city}&appid=${apiKey}&units=metric`;
   };
 
-  private makeRequest = async (url: string): Promise<IRequest> => {
+  private makeRequest = async (url: string): Promise<Request> => {
     return fetch(url)
       .then(res => res.json())
       .then(body => {
@@ -31,11 +31,12 @@ export class WeatherService {
         console.log(error);
       });
   };
+
   /** Queries the weather API - returning the current weather for a given city
    * @param city - the city passed through pathParams
    * @returns a request body via openWeatherMapAPI
    */
-  public get = (city: string): Promise<IRequest> => {
+  public get = (city: string): Promise<Request> => {
     return this.makeRequest(this.constructUrl('weather', city));
   };
 
@@ -43,7 +44,7 @@ export class WeatherService {
    * @param city - the city passed through pathParams
    * @returns a request body via openWeatherMapAPI
    */
-  public getForecast = (city: string): Promise<IRequest> => {
+  public getForecast = (city: string): Promise<Request> => {
     return this.makeRequest(this.constructUrl('forecast', city));
   };
 }
